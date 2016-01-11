@@ -1,25 +1,30 @@
+angular.module('flapperNews', ['ui.router'])
+
+app.factory('posts', [function(){//basically an object used to return the variable o which has posts
+  var o = {
+    posts: []
+  };
+  return o;
+}]);
+
+
+
 var app = angular.module('flapperNews', []);
 
 app.controller('MainCtrl', [
-  '$scope',
-    function($scope){
-      $scope.posts = [
-      {title: 'Hello', upvotes:5},
-      {title: 'Hello 2', upvotes:5},
-      {title: 'Hello 3', upvotes:4},
-      {title: 'Hello 4', upvotes:3},
-      {title: 'Hello 5', upvotes:2}
-    ];
-    $scope.addPost = function(){
-      if(!$scope.title || $scope.title === '') { return; }
-      $scope.posts.push(
-        {
-          title: $scope.title,
-          link: $scope.link,
-          upvotes: 0
-        });
-      $scope.title = "";
-      $scope.link = '';
+  '$scope', 'posts'
+    function($scope, posts){
+      $scope.posts = posts.posts;
+      $scope.addPost = function(){
+        if(!$scope.title || $scope.title === '') { return; }
+        $scope.posts.push(
+          {
+            title: $scope.title,
+            link: $scope.link,
+            upvotes: 0
+          });
+        $scope.title = "";
+        $scope.link = '';
     };
     $scope.incrementUpvotes = function(post){
         post.upvotes +=1;
